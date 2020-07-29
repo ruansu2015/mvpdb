@@ -2,6 +2,7 @@ package com.example.mvpdb.http;
 
 import com.example.mvpdb.base.BaseModel;
 
+import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -45,4 +46,8 @@ public interface HttpApi {
     //渠道列表
     @POST("channel/getList")
     Call<BaseModel<Object>> getChannelList(@Body RequestBody body);
+
+    //渠道列表
+    @POST("channel/getList")
+    <T> Observable<BaseModel<T>> getChannel(@Body RequestBody body);
 }

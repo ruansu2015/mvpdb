@@ -6,6 +6,7 @@ import com.example.mvpdb.base.BaseModel;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.Callback;
 
@@ -29,4 +30,7 @@ public class HttpManager {
         HttpConfig.getApi().getChannelList(getRequestBody(getBaseMap())).enqueue(callback);
     }
 
+    public static <T> Observable<BaseModel<T>> getChannelList() {
+        return HttpConfig.getApi().getChannel(getRequestBody(getBaseMap()));
+    }
 }

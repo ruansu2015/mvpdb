@@ -24,4 +24,13 @@ public class LoginPresenter extends BasePresenter<LoginIView> {
             }
         });
     }
+
+    public void getList() {
+        addDisposable(HttpManager.getChannelList(), new BaseObserver<List<ChannelBean>>() {
+            @Override
+            protected void onResult(List<ChannelBean> channelBeans) {
+                view.getChannelList(channelBeans);
+            }
+        });
+    }
 }

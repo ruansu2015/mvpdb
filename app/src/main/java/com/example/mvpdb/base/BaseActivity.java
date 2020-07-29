@@ -20,26 +20,31 @@ import java.util.List;
  * Created by Ruansu
  * on 2020/7/27 4:13 PM
  */
-public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements IBaseView {
+public abstract class BaseActivity<B extends ViewDataBinding, P extends BasePresenter>
+        extends AppCompatActivity implements IBaseView {
 
+    protected B binding;
     protected P presenter;
-    private LayoutBaseBinding binding;
+    private LayoutBaseBinding baseBinding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.layout_base);
+        baseBinding = DataBindingUtil.setContentView(this, R.layout.layout_base);
+        if (setupLayoutId() != 0) binding = setDataBindingView(setupLayoutId());
         presenter = setupPresenter();
-        initView(binding.title);
+        initView(baseBinding.title);
     }
 
     protected P setupPresenter() {
         return null;
     }
 
+    protected abstract int setupLayoutId();
+
     public <T extends ViewDataBinding> T setDataBindingView(@LayoutRes int layoutId) {
         return DataBindingUtil.inflate(LayoutInflater.from(this),
-                layoutId, binding.baseContentLayout, true);
+                layoutId, baseBinding.baseContentLayout, true);
     }
 
     protected abstract void initView(TextView textView);
