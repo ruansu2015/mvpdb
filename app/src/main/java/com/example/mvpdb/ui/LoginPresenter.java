@@ -16,7 +16,7 @@ public class LoginPresenter extends BasePresenter<LoginIView> {
     }
 
     public void getChannelList() {
-        HttpManager.getChannelList(new ResponseCallback<List<ChannelBean>>() {
+        HttpManager.getChannelList(new ResultCallback<List<ChannelBean>>() {
 
             @Override
             protected void onResult(List<ChannelBean> channelBeans) {
@@ -25,12 +25,4 @@ public class LoginPresenter extends BasePresenter<LoginIView> {
         });
     }
 
-    public void getList() {
-        addDisposable(HttpManager.getChannelList(), new BaseObserver<List<ChannelBean>>() {
-            @Override
-            protected void onResult(List<ChannelBean> channelBeans) {
-                view.getChannelList(channelBeans);
-            }
-        });
-    }
 }

@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.PathUtils;
-import com.blankj.utilcode.util.SPStaticUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.example.mvpdb.Constant;
 
@@ -28,6 +27,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okio.Buffer;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HttpConfig {
@@ -65,6 +65,7 @@ public class HttpConfig {
             retrofit = new Retrofit.Builder()
                     .baseUrl(Constant.Http.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .client(getOkHttpClient())
                     .build();
         return retrofit;

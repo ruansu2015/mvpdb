@@ -16,11 +16,10 @@ import com.example.mvpdb.ui.LoginPresenter;
 
 import java.util.List;
 
-public class MainActivity extends BaseActivity<LoginPresenter> implements LoginIView {
+public class MainActivity extends BaseActivity<ActivityMainBinding, LoginPresenter> implements LoginIView {
 
     @Override
     protected void initView(TextView textView) {
-        ActivityMainBinding binding = (ActivityMainBinding) setDataBindingView(R.layout.activity_main);
 //        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
 //                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
 //                .build();
@@ -33,6 +32,11 @@ public class MainActivity extends BaseActivity<LoginPresenter> implements LoginI
     protected void onResume() {
         super.onResume();
         presenter.getChannelList();
+    }
+
+    @Override
+    protected int setupLayoutId() {
+        return R.layout.activity_main;
     }
 
     @Override
@@ -52,6 +56,8 @@ public class MainActivity extends BaseActivity<LoginPresenter> implements LoginI
 
     @Override
     public void getChannelList(List<ChannelBean> channelBeans) {
-        LogUtils.d(channelBeans);
+        for (ChannelBean bean : channelBeans) {
+            LogUtils.d(bean);
+        }
     }
 }

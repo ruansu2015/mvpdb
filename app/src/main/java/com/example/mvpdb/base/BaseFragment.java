@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
@@ -46,30 +47,26 @@ public abstract class BaseFragment<B extends ViewDataBinding, P extends BasePres
         initView(baseBinding.title);
     }
 
-    protected P setupPresenter() {
-        return null;
-    }
-
     protected abstract int setupLayoutId();
+
+    protected abstract P setupPresenter();
+
+    protected abstract void initView(TextView titleView);
 
     public <T extends ViewDataBinding> T setDataBindingView(@LayoutRes int layoutId) {
         return DataBindingUtil.inflate(LayoutInflater.from(getContext()),
                 layoutId, baseBinding.baseContentLayout, true);
     }
 
-    protected abstract void initView(TextView textView);
-
     public boolean isListEmpty(List<?> list) {
         return list == null || list.isEmpty();
     }
 
-    @Override
     public void showToast(String message) {
         ToastUtil.show(message);
     }
 
-    @Override
-    public void showToast(int resId) {
+    public void showToast(@StringRes int resId) {
         ToastUtil.show(resId);
     }
 

@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
@@ -36,18 +37,16 @@ public abstract class BaseActivity<B extends ViewDataBinding, P extends BasePres
         initView(baseBinding.title);
     }
 
-    protected P setupPresenter() {
-        return null;
-    }
-
     protected abstract int setupLayoutId();
+
+    protected abstract P setupPresenter();
+
+    protected abstract void initView(TextView titleView);
 
     public <T extends ViewDataBinding> T setDataBindingView(@LayoutRes int layoutId) {
         return DataBindingUtil.inflate(LayoutInflater.from(this),
                 layoutId, baseBinding.baseContentLayout, true);
     }
-
-    protected abstract void initView(TextView textView);
 
     public String getTag() {
         return getClass().getSimpleName();
@@ -57,13 +56,11 @@ public abstract class BaseActivity<B extends ViewDataBinding, P extends BasePres
         return list == null || list.isEmpty();
     }
 
-    @Override
     public void showToast(String message) {
         ToastUtil.show(message);
     }
 
-    @Override
-    public void showToast(int resId) {
+    public void showToast(@StringRes int resId) {
         ToastUtil.show(resId);
     }
 

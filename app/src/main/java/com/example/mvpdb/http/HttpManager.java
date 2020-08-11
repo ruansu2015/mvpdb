@@ -1,14 +1,15 @@
 package com.example.mvpdb.http;
 
 import com.blankj.utilcode.util.GsonUtils;
-import com.example.mvpdb.base.BaseModel;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.RequestBody;
-import retrofit2.Callback;
 
 /**
  * Created by Ruansu
@@ -26,11 +27,14 @@ public class HttpManager {
         return params;
     }
 
-    public static void getChannelList(Callback<BaseModel<Object>> callback) {
-        HttpConfig.getApi().getChannelList(getRequestBody(getBaseMap())).enqueue(callback);
+    private static <T> void bindObserver(Observable<T> observable, Observer<T> observer) {
+        if (observable != null && observer != null)
+            observable.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(observer);
     }
 
-    public static <T> Observable<BaseModel<T>> getChannelList() {
-        return HttpConfig.getApi().getChannel(getRequestBody(getBaseMap()));
+    public static void getChannelList(Observer observer) {
+        bindObserver(HttpConfig.getApi().getChannel(getRequestBody(getBaseMap())), observer);
     }
 }
